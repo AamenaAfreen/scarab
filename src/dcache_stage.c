@@ -58,6 +58,17 @@
 #define STAGE_MAX_OP_COUNT NUM_FUS
 
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void cache_miss_type_counter(Cache* cache, uns set, Addr tag, uns procid);
+
+#ifdef __cplusplus
+}
+#endif
+
+
 /**************************************************************************************/
 /* Global Variables */
 
@@ -286,6 +297,9 @@ void update_dcache_stage(Stage_Data* src_sd) {
 
     line = (Dcache_Data*)cache_access(&dc->dcache, op->oracle_info.va,
                                       &line_addr, TRUE);
+    Addr tag;
+    uns set = ext_cache_index(&dc->dcache, op->oracle_info.va, &tag, &line_addr);
+
     op->dcache_cycle = cycle_count;
     dc->idle_cycle   = MAX2(dc->idle_cycle, cycle_count + DCACHE_CYCLES);
 
@@ -428,6 +442,7 @@ void update_dcache_stage(Stage_Data* src_sd) {
           if(!op->off_path) {
             STAT_EVENT(op->proc_id, DCACHE_MISS);
             STAT_EVENT(op->proc_id, DCACHE_MISS_ONPATH);
+            cache_miss_type_counter(&dc->dcache, set, tag, op->proc_id);
             STAT_EVENT(op->proc_id, DCACHE_MISS_LD_ONPATH);
             op->oracle_info.dcmiss = TRUE;
             STAT_EVENT(op->proc_id, DCACHE_MISS_LD);
@@ -483,6 +498,7 @@ void update_dcache_stage(Stage_Data* src_sd) {
           if(!op->off_path) {
             STAT_EVENT(op->proc_id, DCACHE_MISS);
             STAT_EVENT(op->proc_id, DCACHE_MISS_ONPATH);
+            cache_miss_type_counter(&dc->dcache, set, tag, op->proc_id);
             STAT_EVENT(op->proc_id, DCACHE_MISS_LD_ONPATH);
             op->oracle_info.dcmiss = TRUE;
             STAT_EVENT(op->proc_id, DCACHE_MISS_LD);
@@ -541,6 +557,7 @@ void update_dcache_stage(Stage_Data* src_sd) {
           if(!op->off_path) {
             STAT_EVENT(op->proc_id, DCACHE_MISS);
             STAT_EVENT(op->proc_id, DCACHE_MISS_ONPATH);
+            cache_miss_type_counter(&dc->dcache, set, tag, op->proc_id);
             STAT_EVENT(op->proc_id, DCACHE_MISS_ST_ONPATH);
             op->oracle_info.dcmiss = TRUE;
             STAT_EVENT(op->proc_id, DCACHE_MISS_ST);
