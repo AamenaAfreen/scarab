@@ -41,6 +41,7 @@
 #include "bp/cbp_to_scarab.h"
 #include "bp/gshare.h"
 #include "bp/hybridgp.h"
+#include "bp/perceptron.h"
 #include "bp/tagescl.h"
 #include "libs/cache_lib.h"
 #include "model.h"

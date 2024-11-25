@@ -67,6 +67,7 @@ DEF_PARAM(  late_bp_mech              , LATE_BP_MECH              , uns     , bp
 DEF_PARAM(  late_bp_latency           , LATE_BP_LATENCY           , uns     , uns        , 5          ,        )
 DEF_PARAM(  hist_length               , HIST_LENGTH               , uns     , uns        , 16         ,        )
 DEF_PARAM(  pht_ctr_bits              , PHT_CTR_BITS              , uns     , uns        , 2          , const  ) /* const */
+DEF_PARAM(  ptb_size                  , PERCEPTRON_TABLE_SIZE     , uns     , uns        , 1024       ,   ) /* const */
 DEF_PARAM(  bht_entries               , BHT_ENTRIES               , uns     , uns        , (4 * 1024) ,        )
 DEF_PARAM(  bht_assoc                 , BHT_ASSOC                 , uns     , uns        , 4          ,        )
 DEF_PARAM(  hybrids_index_length      , HYBRIDS_INDEX_LENGTH      , uns     , uns        , 16         ,        )
